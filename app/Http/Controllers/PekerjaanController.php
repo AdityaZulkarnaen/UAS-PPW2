@@ -13,7 +13,7 @@ class PekerjaanController extends Controller
         $keyword = $request->get('keyword');
         $data = Pekerjaan::when($keyword, function ($query) use ($keyword) {
             $query->where('nama', 'like', "%{$keyword}%")->orWhere('deskripsi', 'like', "%{$keyword}%");
-        })->get();
+        })->paginate(5)->withQueryString();
         return view('pekerjaan.index', compact('data'));
     }
 

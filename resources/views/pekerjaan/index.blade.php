@@ -56,6 +56,11 @@
                 </table>
             </div>
 
+            <!-- Pagination -->
+            <div class="mt-4">
+                {{ $data->links() }}
+            </div>
+
         </div>
     </section>
 @endsection
