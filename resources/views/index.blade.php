@@ -25,10 +25,10 @@
         new Chart(ctx1, {
             type: 'pie',
             data: {
-                labels: ["Male", "Female"],
+                labels: ["Laki-laki", "Perempuan"],
                 datasets: [{
                     label: 'Jumlah',
-                    data: [4644,4800],
+                    data: [{{ $maleCount }}, {{ $femaleCount }}],
                     backgroundColor: [
                         '#3b82f6',
                         '#ec4899'
@@ -55,19 +55,21 @@
             type: 'bar',
             data: {
                 labels: [
-                    "Software Engineer",
-                    "Data Analyst",
-                    "Project Manager",
-                    "System Administrator",
-                    "UI/UX Designer"
+                    @foreach($topPekerjaan as $p)
+                        "{{ $p->nama }}"{{ !$loop->last ? ',' : '' }}
+                    @endforeach
                 ],
                 datasets: [{
                     label: 'Jumlah Pegawai',
-                    data: [110, 95, 85, 75, 70],
+                    data: [
+                        @foreach($topPekerjaan as $p)
+                            {{ $p->pegawai_count }}{{ !$loop->last ? ',' : '' }}
+                        @endforeach
+                    ],
                     backgroundColor: '#C0392B',
                     borderColor: '#922B21',
                     borderWidth: 1,
-                    borderRadius: 4, // rounded bars
+                    borderRadius: 4,
                     barPercentage: 0.6,
                 }]
             },
@@ -83,6 +85,9 @@
                 scales: {
                     y: {
                         beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
                     },
                 }
             }

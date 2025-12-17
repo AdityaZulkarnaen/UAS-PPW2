@@ -51,8 +51,8 @@
         <a href="#" class="flex items-center space-x-2 rtl:space-x-reverse">
             <img src="{{ asset('img/logo.png') }}" class="h-12" alt="Logo UGM"/>
             <div class="flex flex-col leading-tight">
-                <span class="text-lg md:text-xl font-bold text-[#631913]">NAMA SAYA</span>
-                <span class="text-xs md:text-sm font-semibold text-[#631913]">NIM SAYA</span>
+                <span class="text-lg md:text-xl font-bold text-[#631913]">Aditya Lucky Zulkarnaen</span>
+                <span class="text-xs md:text-sm font-semibold text-[#631913]">24/537764/SV/24449</span>
             </div>
         </a>
         <button id="menu-btn" type="button" class="inline-flex flex-none items-center p-1 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
@@ -70,7 +70,7 @@
                     <a href="{{ route('pekerjaan.index') }}" class="block py-2 px-3 md:p-0 transition-transform hover:scale-120 text-[#96291F] @yield('menupekerjaan')">Pekerjaan</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 px-3 md:p-0 transition-transform hover:scale-120 text-[#96291F] @yield('menupegawai')">Pegawai</a>
+                    <a href="{{ route('pegawai.index') }}" class="block py-2 px-3 md:p-0 transition-transform hover:scale-120 text-[#96291F] @yield('menupegawai')">Pegawai</a>
                 </li>
             </ul>
         </div>
@@ -78,6 +78,39 @@
 </nav>
 
 @yield('content')
+
+<!-- Notification Toast -->
+@if(session('success'))
+<div id="toast-success" class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-lg border border-green-200" role="alert">
+    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+        </svg>
+    </div>
+    <div class="ms-3 text-sm font-normal">{{ session('success') }}</div>
+    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" onclick="document.getElementById('toast-success').remove()">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+    </button>
+</div>
+@endif
+
+@if(session('error'))
+<div id="toast-error" class="fixed top-5 right-5 z-50 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-lg border border-red-200" role="alert">
+    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+        </svg>
+    </div>
+    <div class="ms-3 text-sm font-normal">{{ session('error') }}</div>
+    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" onclick="document.getElementById('toast-error').remove()">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+    </button>
+</div>
+@endif
 
 <footer class="bg-gray-900 shadow-sm">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
@@ -108,9 +141,9 @@
                 <div>
                     <div class="text-white text-right">
                         <h2 class="mb-2 text-sm font-semibold uppercase">Identitas Mahasiswa</h2>
-                        <p>Nama Saya</p>
-                        <p>NIM Saya</p>
-                        <p>Kelas Praktikum</p>
+                        <p>Aditya Lucky Zulkarnaen</p>
+                        <p>24/537764/SV/24449</p>
+                        <p>PL3A2</p>
                     </div>
                 </div>
             </div>
@@ -127,6 +160,14 @@
         menu.classList.toggle('hidden');
         menuBtn.setAttribute('aria-expanded', !menu.classList.contains('hidden'));
     });
+
+    // Auto hide notifications after 5 seconds
+    setTimeout(() => {
+        const toastSuccess = document.getElementById('toast-success');
+        const toastError = document.getElementById('toast-error');
+        if (toastSuccess) toastSuccess.remove();
+        if (toastError) toastError.remove();
+    }, 5000);
 </script>
 @stack('js')
 </body>
