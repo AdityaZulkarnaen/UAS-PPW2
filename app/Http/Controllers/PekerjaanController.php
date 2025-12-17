@@ -6,6 +6,7 @@ use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\CaptchaController;
 
 class PekerjaanController extends Controller
 {
@@ -19,6 +20,8 @@ class PekerjaanController extends Controller
     }
 
     public function add() {
+        // Generate new captcha for the form
+        session()->forget('captcha');
         return view('pekerjaan.add');
     }
 
@@ -26,17 +29,25 @@ class PekerjaanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
+            'captcha' => 'required|string',
         ]);
 
         if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
+
+        // Validate captcha
+        if (!CaptchaController::validate($request->captcha)) {
+            return redirect()->back()->withErrors(['captcha' => 'Kode captcha tidak valid'])->withInput();
+        }
 
         $data = new Pekerjaan();
         $data->nama = $request->nama;
         $data->deskripsi = $request->deskripsi;
 
         if ($data->save()) {
+            session()->forget('captcha'); // Clear captcha after successful save
             return redirect()->route('pekerjaan.index')->with('success', 'Data berhasil ditambahkan');
         } else {
+            session()->forget('captcha'); // Clear captcha even on failure
             return redirect()->route('pekerjaan.index')->with('error', 'Data tidak tersimpan');
         }
     }
