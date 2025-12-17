@@ -9,11 +9,17 @@
                 @csrf
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Pekerjaan</label>
-                    <input type="text" name="nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    <input type="text" name="nama" value="{{ old('nama') }}" class="bg-gray-50 border @error('nama') border-red-500 @else border-gray-300 @enderror text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    @error('nama')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                    <textarea name="deskripsi" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" autocomplete="off" required></textarea>
+                    <textarea name="deskripsi" rows="4" class="bg-gray-50 border @error('deskripsi') border-red-500 @else border-gray-300 @enderror text-gray-900 text-sm rounded-lg block w-full p-2.5" autocomplete="off" required>{{ old('deskripsi') }}</textarea>
+                    @error('deskripsi')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="flex justify-end gap-2">
                     <button type="reset" class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer">Reset</button>

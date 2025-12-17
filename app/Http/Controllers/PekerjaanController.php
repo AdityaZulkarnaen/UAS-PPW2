@@ -27,7 +27,7 @@ class PekerjaanController extends Controller
             'deskripsi' => 'required|string',
         ]);
 
-        if ($validator->fails()) return redirect()->back()->with($validator->errors()->all());
+        if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
 
         $data = new Pekerjaan();
         $data->nama = $request->nama;
@@ -36,7 +36,7 @@ class PekerjaanController extends Controller
         if ($data->save()) {
             return redirect()->route('pekerjaan.index')->with('success', 'Data berhasil ditambahkan');
         } else {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tidak tersimpan');
+            return redirect()->route('pekerjaan.index')->with('error', 'Data tidak tersimpan');
         }
     }
 
@@ -51,7 +51,7 @@ class PekerjaanController extends Controller
             'deskripsi' => 'required|string',
         ]);
 
-        if ($validator->fails()) return redirect()->back()->with($validator->errors()->all());
+        if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
 
         $data = Pekerjaan::findOrFail($request->id);
 
@@ -59,9 +59,9 @@ class PekerjaanController extends Controller
         $data->deskripsi = $request->deskripsi;
 
         if ($data->save()) {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tersimpan');
+            return redirect()->route('pekerjaan.index')->with('success', 'Data berhasil diupdate');
         } else {
-            return redirect()->route('pekerjaan.index')->with('success', 'Data tidak tersimpan');
+            return redirect()->route('pekerjaan.index')->with('error', 'Data tidak tersimpan');
         }
     }
 
